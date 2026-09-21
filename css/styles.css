@@ -211,6 +211,11 @@ a { color: var(--teal-deep); }
 .details dt { font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--teal-deep); margin-bottom: 6px; }
 .details dd { margin: 0; font-weight: 500; }
 
+/* Event cards */
+.event-meta { display: grid; gap: 14px; margin: 18px 0 0; }
+.event-meta dt { font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--teal-deep); margin-bottom: 4px; }
+.event-meta dd { margin: 0; font-weight: 500; }
+
 /* Testimonial slider */
 .carousel { background: var(--indigo-tint); border-radius: 24px; padding: 48px 28px 24px; position: relative; overflow: hidden; }
 .carousel::before {
