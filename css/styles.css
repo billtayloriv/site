@@ -157,6 +157,7 @@ a { color: var(--teal-deep); }
 .grid { display: grid; gap: 24px; }
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
 .card {
   background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 32px 28px; border-top: 4px solid var(--teal);
@@ -254,10 +255,7 @@ a { color: var(--teal-deep); }
 
 /* Profile */
 .profile { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: start; }
-.photo-slot {
-  aspect-ratio: 4 / 5; border-radius: var(--radius); border: 2px dashed #c9a400; background: #fff9d9; color: #5a4300;
-  display: grid; place-items: center; text-align: center; padding: 20px; font-size: .95rem;
-}
+.profile-photo { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); }
 
 /* FAQ */
 .faq details { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 12px; padding: 0 22px; }
@@ -308,13 +306,18 @@ a { color: var(--teal-deep); }
   .btn-small { margin: 8px 0 0; text-align: center; }
   .brand-logo { height: 44px; }
   .hero-grid, .band-inner, .profile, .contact-grid { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .hero { padding: 64px 0 72px; }
   .section { padding: 60px 0; }
-  .profile .photo-slot { max-width: 260px; }
+  .profile .profile-photo { max-width: 260px; }
   .footer-grid { grid-template-columns: 1fr; gap: 28px; }
   .details > div { border-right: 0; border-bottom: 1px solid var(--line); }
   .details > div:last-child { border-bottom: 0; }
   .carousel { padding: 40px 18px 20px; }
+}
+
+@media (max-width: 560px) {
+  .grid-4 { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
