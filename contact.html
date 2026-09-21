@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2F3192">
+  <title>Contact | Taylored Success Management</title>
+  <meta name="description" content="Book a conversation with Taylored Success Management about your customer success program, or ask about the Work The Room networking event.">
+  <meta property="og:title" content="Contact | Taylored Success Management">
+  <meta property="og:description" content="Tell us where you are today. We will tell you what we would do first.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="images/logo-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html"><img class="brand-logo" src="images/logo.svg" alt="Taylored Success Management, home" width="223" height="52"></a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="what-we-do.html">What We Do</a>
+        <a href="about.html">About</a>
+        <a href="work-the-room.html">Work The Room</a>
+        <a class="btn btn-small" href="contact.html" aria-current="page">Book a conversation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero hero--light">
+      <div class="container">
+        <span class="eyebrow">Contact</span>
+        <h1>Let's talk.</h1>
+        <p class="lede">Tell us where you are today. We will tell you what we would do first. No pitch deck required.</p>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container contact-grid">
+        <form class="form" name="contact" method="POST" action="thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact">
+          <p class="hp"><label>Do not fill this in: <input name="bot-field"></label></p>
+          <label>Your name
+            <input type="text" name="name" autocomplete="name" required>
+          </label>
+          <label>Email
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+          <label>Company
+            <input type="text" name="company" autocomplete="organization">
+          </label>
+          <label>What can we help with?
+            <select name="topic">
+              <option>Customer success program</option>
+              <option>Work The Room networking event</option>
+              <option>Sponsoring or partnering</option>
+              <option>Something else</option>
+            </select>
+          </label>
+          <label>Tell us a little more
+            <textarea name="message"></textarea>
+          </label>
+          <div><button class="btn" type="submit">Send message</button></div>
+        </form>
+
+        <aside class="contact-side card">
+          <h3>Prefer to reach out directly?</h3>
+          <p><strong>Email</strong><br><span class="todo">Add your business email</span></p>
+          <p><strong>LinkedIn</strong><br><span class="todo">Add your LinkedIn link</span></p>
+          <p><strong>Location</strong><br><span class="todo">Add your city or region</span></p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <img class="footer-logo" src="images/logo-white.svg" alt="Taylored Success Management" width="260" height="61">
+          <p>We build and scale customer success programs for SaaS and IT service businesses. Connecting people and business results.</p>
+        </div>
+        <div>
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="what-we-do.html">What We Do</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="work-the-room.html">Work The Room</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Connect</h3>
+          <ul>
+            <li><a href="contact.html">Book a conversation</a></li>
+            <li><span class="todo">Add your LinkedIn link</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-bottom">&copy; <span data-year>2026</span> Taylored Success Management. All rights reserved.</p>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
