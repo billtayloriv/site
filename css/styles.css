@@ -92,7 +92,7 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
 .brand { display: block; line-height: 0; }
 .brand-logo { height: 52px; width: auto; transition: height .25s ease, transform .25s ease; }
 .site-header.is-scrolled .brand-logo { height: 38px; }
-.brand:hover .brand-logo, .brand:focus-visible .brand-logo { transform: scale(1.06) rotate(-2deg); }
+.brand:hover .brand-logo, .brand:focus-visible .brand-logo { transform: scale(1.06); }
 .site-nav { display: flex; align-items: center; gap: 4px; }
 .site-nav a:not(.btn) {
   position: relative;
@@ -306,11 +306,19 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
 .profile { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: start; }
 .profile-photo { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); }
 
-/* Event photo gallery */
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
-.gallery-item { padding: 0; margin: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+/* Event photo carousel */
+.gallery-track {
+  display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+}
+.gallery-track::-webkit-scrollbar { display: none; }
+.gallery-item {
+  flex: 0 0 calc(25% - 13.5px); scroll-snap-align: start;
+  padding: 0; margin: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--radius); overflow: hidden; line-height: 0;
+}
 .gallery-item img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .35s ease; }
 .gallery-item:hover img, .gallery-item:focus-visible img { transform: scale(1.07); }
+.gallery-controls { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 22px; }
 
 /* Lightbox */
 .lightbox {
@@ -388,10 +396,12 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
   .details > div { border-right: 0; border-bottom: 1px solid var(--line); }
   .details > div:last-child { border-bottom: 0; }
   .carousel { padding: 40px 18px 20px; }
+  .gallery-item { flex: 0 0 calc(50% - 9px); }
 }
 
 @media (max-width: 560px) {
   .grid-4 { grid-template-columns: 1fr; }
+  .gallery-item { flex: 0 0 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
