@@ -78,6 +78,70 @@ if (heroRotator && !prefersReducedMotion) {
   }, 4500);
 }
 
+// Past events photo carousel: shows several photos at once, auto-advances one at a time.
+// 4s per step (images read faster than the quote carousel's text, so it can move quicker),
+// paused on hover/focus/touch, and a visible Pause button so it never scrolls without a way to stop it.
+const galleryCarousel = document.querySelector('[data-gallery-carousel]');
+if (galleryCarousel) {
+  const gTrack = galleryCarousel.querySelector('.gallery-track');
+  const gItems = Array.from(gTrack.children);
+  const gPrevBtn = galleryCarousel.querySelector('[data-gallery-prev]');
+  const gNextBtn = galleryCarousel.querySelector('[data-gallery-next]');
+  const gToggleBtn = galleryCarousel.querySelector('[data-gallery-toggle]');
+  const G_DELAY = 4000;
+  const gReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let gPaused = gReduceMotion;
+  let gHovering = false;
+  let gFocused = false;
+  let gTouching = false;
+  let gVisible = true;
+
+  const gStepWidth = () => {
+    const gap = parseFloat(getComputedStyle(gTrack).columnGap) || 18;
+    return gItems[0].getBoundingClientRect().width + gap;
+  };
+
+  const gRender = () => {
+    gToggleBtn.textContent = gPaused ? 'Play' : 'Pause';
+    gToggleBtn.setAttribute('aria-label', gPaused ? 'Start automatic sliding' : 'Pause automatic sliding');
+  };
+
+  const gAdvance = (direction) => {
+    const behavior = gReduceMotion ? 'auto' : 'smooth';
+    const atEnd = gTrack.scrollLeft >= gTrack.scrollWidth - gTrack.clientWidth - 4;
+    if (direction > 0 && atEnd) {
+      gTrack.scrollTo({ left: 0, behavior });
+    } else if (direction < 0 && gTrack.scrollLeft <= 4) {
+      gTrack.scrollTo({ left: gTrack.scrollWidth - gTrack.clientWidth, behavior });
+    } else {
+      gTrack.scrollBy({ left: direction * gStepWidth(), behavior });
+    }
+  };
+
+  gPrevBtn.addEventListener('click', () => gAdvance(-1));
+  gNextBtn.addEventListener('click', () => gAdvance(1));
+  gToggleBtn.addEventListener('click', () => { gPaused = !gPaused; gRender(); });
+
+  galleryCarousel.addEventListener('mouseenter', () => { gHovering = true; });
+  galleryCarousel.addEventListener('mouseleave', () => { gHovering = false; });
+  galleryCarousel.addEventListener('focusin', () => { gFocused = true; });
+  galleryCarousel.addEventListener('focusout', () => { gFocused = false; });
+  gTrack.addEventListener('touchstart', () => { gTouching = true; }, { passive: true });
+  gTrack.addEventListener('touchend', () => { setTimeout(() => { gTouching = false; }, G_DELAY); }, { passive: true });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => { gVisible = entry.isIntersecting; }, { threshold: 0.3 }).observe(galleryCarousel);
+  }
+
+  setInterval(() => {
+    if (gPaused || gHovering || gFocused || gTouching || !gVisible || document.hidden) return;
+    gAdvance(1);
+  }, G_DELAY);
+
+  gRender();
+}
+
 // Lightbox for the "past events" photo gallery
 const lightbox = document.querySelector('[data-lightbox]');
 if (lightbox) {

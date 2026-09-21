@@ -139,19 +139,43 @@
           <span class="eyebrow">See it for yourself</span>
           <h2 id="gallery-heading">Photos from past events</h2>
         </div>
-        <div class="gallery-grid">
-          <button type="button" class="gallery-item" data-lightbox-trigger>
-            <img src="images/wtr-event-1.jpg" alt="Attendees talking and networking at a past Work The Room event" loading="lazy" width="480" height="360">
-          </button>
-          <button type="button" class="gallery-item" data-lightbox-trigger>
-            <img src="images/wtr-event-2.jpg" alt="Attendees talking and networking at a past Work The Room event" loading="lazy" width="480" height="360">
-          </button>
-          <button type="button" class="gallery-item" data-lightbox-trigger>
-            <img src="images/wtr-event-3.jpg" alt="Attendees posing together at a past Work The Room event" loading="lazy" width="480" height="360">
-          </button>
-          <button type="button" class="gallery-item" data-lightbox-trigger>
-            <img src="images/wtr-event-4.jpg" alt="Attendees talking and networking at a past Work The Room event" loading="lazy" width="480" height="360">
-          </button>
+        <!--
+          PAST EVENTS CAROUSEL
+          To add a photo: copy one whole <button class="gallery-item">...</button> block and paste it
+          below the last one. Keep the alt text describing what's in the photo.
+        -->
+        <div class="gallery-carousel" data-gallery-carousel>
+          <div class="gallery-track">
+            <button type="button" class="gallery-item" data-lightbox-trigger>
+              <img src="images/wtr-event-1.jpg" alt="Attendees talking and networking at a past Work The Room event" loading="lazy" width="480" height="360">
+            </button>
+            <button type="button" class="gallery-item" data-lightbox-trigger>
+              <img src="images/wtr-event-2.jpg" alt="Attendees talking and networking at a past Work The Room event" loading="lazy" width="480" height="360">
+            </button>
+            <button type="button" class="gallery-item" data-lightbox-trigger>
+              <img src="images/wtr-event-3.jpg" alt="Attendees posing together at a past Work The Room event" loading="lazy" width="480" height="360">
+            </button>
+            <button type="button" class="gallery-item" data-lightbox-trigger>
+              <img src="images/wtr-event-4.jpg" alt="Attendees talking and networking at a past Work The Room event" loading="lazy" width="480" height="360">
+            </button>
+            <button type="button" class="gallery-item" data-lightbox-trigger>
+              <img src="images/wtr-event-5.jpg" alt="Two attendees posing together at a past Work The Room event" loading="lazy" width="480" height="360">
+            </button>
+            <button type="button" class="gallery-item" data-lightbox-trigger>
+              <img src="images/wtr-event-6.jpg" alt="A group of attendees posing together at a past Work The Room event" loading="lazy" width="480" height="360">
+            </button>
+            <button type="button" class="gallery-item" data-lightbox-trigger>
+              <img src="images/wtr-event-7.jpg" alt="Attendees mingling and talking at a past Work The Room event" loading="lazy" width="480" height="360">
+            </button>
+            <button type="button" class="gallery-item" data-lightbox-trigger>
+              <img src="images/wtr-event-8.jpg" alt="Attendees gathered at the bar talking at a past Work The Room event" loading="lazy" width="480" height="360">
+            </button>
+          </div>
+          <div class="gallery-controls">
+            <button type="button" class="carousel-btn arrow" data-gallery-prev aria-label="Previous photos">&lsaquo;</button>
+            <button type="button" class="carousel-btn" data-gallery-toggle aria-label="Pause automatic sliding">Pause</button>
+            <button type="button" class="carousel-btn arrow" data-gallery-next aria-label="Next photos">&rsaquo;</button>
+          </div>
         </div>
       </div>
     </section>
