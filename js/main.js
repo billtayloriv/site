@@ -13,6 +13,109 @@ document.querySelectorAll('[data-year]').forEach((el) => {
   el.textContent = new Date().getFullYear();
 });
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Scroll progress bar
+const progressBar = document.querySelector('.scroll-progress');
+if (progressBar) {
+  const updateProgress = () => {
+    const doc = document.documentElement;
+    const scrollable = doc.scrollHeight - doc.clientHeight;
+    const pct = scrollable > 0 ? (doc.scrollTop / scrollable) * 100 : 0;
+    progressBar.style.width = `${pct}%`;
+  };
+  updateProgress();
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+}
+
+// Shrink the header once the page is scrolled
+const siteHeader = document.querySelector('.site-header');
+if (siteHeader) {
+  const updateHeader = () => {
+    siteHeader.classList.toggle('is-scrolled', window.scrollY > 40);
+  };
+  updateHeader();
+  window.addEventListener('scroll', updateHeader, { passive: true });
+}
+
+// Fade/slide sections and cards in as they scroll into view
+if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+  const revealTargets = document.querySelectorAll(
+    '.card, .steps li, .chain, .profile, .belief blockquote, .principles > div, .band-inner > div, .carousel, .faq details, .gallery-item, .contact-side, .contact-grid > div'
+  );
+  revealTargets.forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.transitionDelay = `${(i % 4) * 90}ms`;
+  });
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealTargets.forEach((el) => revealObserver.observe(el));
+}
+
+// Homepage hero headline rotator
+const heroRotator = document.getElementById('hero-rotator');
+if (heroRotator && !prefersReducedMotion) {
+  const lines = [
+    'AI handles execution. You own the relationships.',
+    'Process scales the busywork. Trust still has to be earned by a person.',
+    "The teams that win with AI didn't automate the relationship. They automated everything else."
+  ];
+  let lineIndex = 0;
+  setInterval(() => {
+    heroRotator.classList.add('is-fading');
+    setTimeout(() => {
+      lineIndex = (lineIndex + 1) % lines.length;
+      heroRotator.textContent = lines[lineIndex];
+      heroRotator.classList.remove('is-fading');
+    }, 400);
+  }, 4500);
+}
+
+// Lightbox for the "past events" photo gallery
+const lightbox = document.querySelector('[data-lightbox]');
+if (lightbox) {
+  const lightboxImg = lightbox.querySelector('[data-lightbox-img]');
+  const closeBtn = lightbox.querySelector('[data-lightbox-close]');
+  let lastFocused = null;
+
+  const openLightbox = (src, alt) => {
+    lastFocused = document.activeElement;
+    lightboxImg.src = src;
+    lightboxImg.alt = alt;
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  };
+
+  const closeLightbox = () => {
+    lightbox.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
+  };
+
+  document.querySelectorAll('[data-lightbox-trigger]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const img = btn.querySelector('img');
+      openLightbox(img.src, img.alt);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+  });
+}
+
 // Quote slider: slides on its own, and people can also swipe, use the arrows, or pause it
 document.querySelectorAll('[data-carousel]').forEach((root) => {
   const track = root.querySelector('.carousel-track');
