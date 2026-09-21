@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <div class="scroll-progress" aria-hidden="true"></div>
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="container header-inner">
@@ -111,16 +112,52 @@
           <span class="eyebrow">Connections made in the room</span>
           <h2 id="quotes-heading">What attendees say</h2>
         </div>
-        <div class="carousel">
-          <figure class="slide">
-            <blockquote><p>One of the people I met at Work The Room is sponsoring our event!</p></blockquote>
-            <figcaption>Christina Micarelli<span class="role">Paws and Obey Dog Training &amp; 4 Paws Dog Rescue of NJ</span></figcaption>
-          </figure>
+        <!--
+          ATTENDEE QUOTES CAROUSEL
+          To add a quote: copy one whole <figure class="slide"> ... </figure> block and paste it below the last one.
+          The dots and auto-sliding update themselves.
+        -->
+        <div class="carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Attendee quotes">
+          <div class="carousel-track">
+            <figure class="slide">
+              <blockquote><p>One of the people I met at Work The Room is sponsoring our event!</p></blockquote>
+              <figcaption>Christina Micarelli<span class="role">Paws and Obey Dog Training &amp; 4 Paws Dog Rescue of NJ</span></figcaption>
+            </figure>
+          </div>
+          <div class="carousel-controls">
+            <button type="button" class="carousel-btn arrow" data-prev aria-label="Previous quote">&lsaquo;</button>
+            <div class="carousel-dots" data-dots></div>
+            <button type="button" class="carousel-btn arrow" data-next aria-label="Next quote">&rsaquo;</button>
+            <button type="button" class="carousel-btn" data-toggle aria-label="Pause automatic sliding">Pause</button>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section section-white">
+    <section class="section section-white" aria-labelledby="gallery-heading">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">See it for yourself</span>
+          <h2 id="gallery-heading">Photos from past events</h2>
+        </div>
+        <div class="gallery-grid">
+          <button type="button" class="gallery-item" data-lightbox-trigger>
+            <img src="images/wtr-event-1.jpg" alt="Attendees talking and networking at a past Work The Room event" loading="lazy" width="480" height="360">
+          </button>
+          <button type="button" class="gallery-item" data-lightbox-trigger>
+            <img src="images/wtr-event-2.jpg" alt="Attendees talking and networking at a past Work The Room event" loading="lazy" width="480" height="360">
+          </button>
+          <button type="button" class="gallery-item" data-lightbox-trigger>
+            <img src="images/wtr-event-3.jpg" alt="Attendees posing together at a past Work The Room event" loading="lazy" width="480" height="360">
+          </button>
+          <button type="button" class="gallery-item" data-lightbox-trigger>
+            <img src="images/wtr-event-4.jpg" alt="Attendees talking and networking at a past Work The Room event" loading="lazy" width="480" height="360">
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
       <div class="container" style="max-width:720px">
         <div class="section-head">
           <span class="eyebrow">At the event</span>
@@ -171,6 +208,11 @@
       </div>
     </section>
   </main>
+
+  <div class="lightbox" data-lightbox>
+    <button type="button" class="lightbox-close" data-lightbox-close aria-label="Close photo">&times;</button>
+    <img class="lightbox-img" data-lightbox-img src="" alt="">
+  </div>
 
   <footer class="site-footer">
     <div class="container">
