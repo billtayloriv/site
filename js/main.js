@@ -68,11 +68,37 @@ if (heroRotator && !prefersReducedMotion) {
     'The best teams automate everything except the relationship.'
   ];
   let lineIndex = 0;
+
+  // Offscreen twin used to measure each tagline's real wrapped height, so the
+  // reserved space always matches the line currently on screen instead of the
+  // tallest tagline in the set.
+  const sizer = document.createElement('span');
+  sizer.setAttribute('aria-hidden', 'true');
+  sizer.style.cssText = 'position:absolute; visibility:hidden; min-height:0; pointer-events:none; left:-9999px; top:0;';
+  document.body.appendChild(sizer);
+
+  const measureHeight = (text) => {
+    const computed = getComputedStyle(heroRotator);
+    sizer.style.width = heroRotator.getBoundingClientRect().width + 'px';
+    sizer.style.font = computed.font;
+    sizer.style.lineHeight = computed.lineHeight;
+    sizer.style.letterSpacing = computed.letterSpacing;
+    sizer.textContent = text;
+    return sizer.scrollHeight;
+  };
+
+  const applyHeight = () => {
+    heroRotator.style.minHeight = measureHeight(lines[lineIndex]) + 'px';
+  };
+  applyHeight();
+  window.addEventListener('resize', applyHeight);
+
   setInterval(() => {
     heroRotator.classList.add('is-fading');
     setTimeout(() => {
       lineIndex = (lineIndex + 1) % lines.length;
       heroRotator.textContent = lines[lineIndex];
+      applyHeight();
       heroRotator.classList.remove('is-fading');
     }, 400);
   }, 7000);
