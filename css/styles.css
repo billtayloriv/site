@@ -170,7 +170,7 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
 .hero h1 em { font-style: normal; color: var(--teal-light); }
 .hero p.lede { color: #dfe3f7; }
 .hero-rotator {
-  font-size: clamp(1.7rem, 3.8vw, 2.6rem); line-height: 1.18; min-height: 5.9em;
+  font-size: clamp(1.7rem, 3.8vw, 2.6rem); line-height: 1.18; min-height: 4.75em;
   transition: opacity .4s ease;
 }
 .hero-rotator.is-fading { opacity: 0; }
@@ -312,13 +312,11 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
 .profile-photo { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); }
 
 /* Event photo carousel */
-.gallery-track {
-  display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
-  -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
-}
-.gallery-track::-webkit-scrollbar { display: none; }
+.gallery-carousel { overflow: hidden; }
+.gallery-track { display: flex; gap: 18px; will-change: transform; }
+.gallery-track.is-stepping { transition: transform .4s ease; }
 .gallery-item {
-  flex: 0 0 calc(25% - 13.5px); scroll-snap-align: start;
+  flex: 0 0 calc(25% - 13.5px);
   padding: 0; margin: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--radius); overflow: hidden; line-height: 0;
 }
 .gallery-item img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .35s ease; }
@@ -413,7 +411,7 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
   html { scroll-behavior: auto; }
   .btn, .carousel-dots button { transition: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .site-header, .header-inner, .brand-logo, .card, .gallery-item img,
+  .site-header, .header-inner, .brand-logo, .card, .gallery-item img, .gallery-track.is-stepping,
   .site-nav a:not(.btn)::after, main a:not(.btn)::after, .site-footer a::after,
   .lightbox, .hero-rotator, .scroll-progress {
     transition: none;

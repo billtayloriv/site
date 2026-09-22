@@ -64,8 +64,8 @@ const heroRotator = document.getElementById('hero-rotator');
 if (heroRotator && !prefersReducedMotion) {
   const lines = [
     'AI handles execution. You own the relationships.',
-    'Process scales the busywork. Trust still has to be earned by a person.',
-    "The teams that win with AI didn't automate the relationship. They automated everything else."
+    'Process scales busywork. People still earn trust.',
+    'The best teams automate everything except the relationship.'
   ];
   let lineIndex = 0;
   setInterval(() => {
@@ -78,13 +78,11 @@ if (heroRotator && !prefersReducedMotion) {
   }, 7000);
 }
 
-// Past events photo carousel: shows several photos at once, auto-advances one at a time.
-// 4s per step (images read faster than the quote carousel's text, so it can move quicker),
-// paused on hover/focus/touch, and a visible Pause button so it never scrolls without a way to stop it.
-// It loops by scrolling in one direction indefinitely: the real photos are cloned once and
-// appended after themselves, and once the scroll position passes the end of the real set it is
-// silently reset back by exactly one set-width, landing on the pixel-identical clone so the loop
-// never visibly rewinds or jumps back to the start.
+// Past events photo carousel: shows several photos at once and glides continuously in one
+// direction. Positioned with a plain CSS transform driven by requestAnimationFrame, not native
+// scrolling - position wraps with a simple modulo every frame, so there is no scroll-snap to
+// fight and no discrete "jump back to the start" event for a fast tab or a queued-up timer to
+// ever expose: the wrap is just normal arithmetic, not a special corrective case.
 const galleryCarousel = document.querySelector('[data-gallery-carousel]');
 if (galleryCarousel) {
   const gTrack = galleryCarousel.querySelector('.gallery-track');
@@ -92,7 +90,7 @@ if (galleryCarousel) {
   const gPrevBtn = galleryCarousel.querySelector('[data-gallery-prev]');
   const gNextBtn = galleryCarousel.querySelector('[data-gallery-next]');
   const gToggleBtn = galleryCarousel.querySelector('[data-gallery-toggle]');
-  const G_DELAY = 4000;
+  const SECONDS_PER_PHOTO = 4;
   const gReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   gItems.forEach((item) => {
@@ -100,6 +98,11 @@ if (galleryCarousel) {
     clone.setAttribute('aria-hidden', 'true');
     clone.setAttribute('tabindex', '-1');
     clone.removeAttribute('data-lightbox-trigger');
+    // Strip the scroll-reveal state: the real photo gets faded in by its own
+    // IntersectionObserver entry, but nothing ever separately observes the clone, so without
+    // this it would inherit "reveal" (opacity: 0) and stay invisible forever once scrolled into.
+    clone.classList.remove('reveal', 'is-visible');
+    clone.style.transitionDelay = '';
     gTrack.appendChild(clone);
   });
 
@@ -108,6 +111,8 @@ if (galleryCarousel) {
   let gFocused = false;
   let gTouching = false;
   let gVisible = true;
+  let gPosition = 0; // px advanced so far; wrapped into [0, setWidth) every frame
+  let gLastFrame = null;
 
   const gStepWidth = () => {
     const gap = parseFloat(getComputedStyle(gTrack).columnGap) || 18;
@@ -115,7 +120,7 @@ if (galleryCarousel) {
   };
 
   // Read fresh every time rather than caching once, so a late image load or a resize can never
-  // leave this stale and cause the loop to under- or overshoot the real/clone boundary
+  // leave this stale
   const gSetWidth = () => gTrack.scrollWidth / 2;
 
   const gRender = () => {
@@ -123,61 +128,51 @@ if (galleryCarousel) {
     gToggleBtn.setAttribute('aria-label', gPaused ? 'Start automatic sliding' : 'Pause automatic sliding');
   };
 
-  // An instant scrollLeft jump fights CSS scroll-snap and gets silently reverted, so briefly
-  // turn snapping off while repositioning, then restore it once the next scroll is under way
-  const gJumpBy = (delta) => {
-    gTrack.style.scrollSnapType = 'none';
-    gTrack.scrollLeft += delta;
-    requestAnimationFrame(() => { gTrack.style.scrollSnapType = ''; });
-  };
+  const gPaint = () => { gTrack.style.transform = `translate3d(${-gPosition}px, 0, 0)`; };
 
-  // Rewind by whole set-widths, landing on the pixel-identical clone, until we're back within
-  // the real set. This runs BEFORE every forward step (not just reactively after scrolling), so
-  // even a burst of missed auto-advance ticks (e.g. a backgrounded tab catching up all at once)
-  // can never push the scroll position past the single cloned copy and expose empty track.
-  const gWrapForward = () => {
+  const gStep = (direction) => {
     const setWidth = gSetWidth();
-    let guard = 0;
-    while (setWidth > 0 && gTrack.scrollLeft > setWidth + 1 && guard < 20) {
-      gJumpBy(-setWidth);
-      guard += 1;
-    }
+    if (setWidth <= 0) return;
+    gTrack.classList.add('is-stepping');
+    gPosition = (gPosition + direction * gStepWidth() + setWidth) % setWidth;
+    gPaint();
+    setTimeout(() => gTrack.classList.remove('is-stepping'), 450);
   };
 
-  const gAdvance = (direction) => {
-    const behavior = gReduceMotion ? 'auto' : 'smooth';
-    if (direction > 0) {
-      gWrapForward();
-    } else if (direction < 0 && gTrack.scrollLeft - gStepWidth() < 0) {
-      gJumpBy(gSetWidth());
+  const gTick = (now) => {
+    if (gLastFrame === null) gLastFrame = now;
+    const dt = (now - gLastFrame) / 1000;
+    gLastFrame = now;
+    const running = !gPaused && !gHovering && !gFocused && !gTouching && gVisible && !document.hidden;
+    if (running) {
+      const setWidth = gSetWidth();
+      if (setWidth > 0) {
+        const pxPerSecond = gStepWidth() / SECONDS_PER_PHOTO;
+        gPosition = (gPosition + pxPerSecond * dt) % setWidth;
+        gPaint();
+      }
     }
-    gTrack.scrollBy({ left: direction * gStepWidth(), behavior });
+    requestAnimationFrame(gTick);
   };
 
-  // Also correct reactively for manual swiping/dragging, which doesn't go through gAdvance
-  gTrack.addEventListener('scroll', gWrapForward);
-
-  gPrevBtn.addEventListener('click', () => gAdvance(-1));
-  gNextBtn.addEventListener('click', () => gAdvance(1));
+  gPrevBtn.addEventListener('click', () => gStep(-1));
+  gNextBtn.addEventListener('click', () => gStep(1));
   gToggleBtn.addEventListener('click', () => { gPaused = !gPaused; gRender(); });
 
   galleryCarousel.addEventListener('mouseenter', () => { gHovering = true; });
   galleryCarousel.addEventListener('mouseleave', () => { gHovering = false; });
   galleryCarousel.addEventListener('focusin', () => { gFocused = true; });
   galleryCarousel.addEventListener('focusout', () => { gFocused = false; });
-  gTrack.addEventListener('touchstart', () => { gTouching = true; }, { passive: true });
-  gTrack.addEventListener('touchend', () => { setTimeout(() => { gTouching = false; }, G_DELAY); }, { passive: true });
+  galleryCarousel.addEventListener('touchstart', () => { gTouching = true; }, { passive: true });
+  galleryCarousel.addEventListener('touchend', () => { setTimeout(() => { gTouching = false; }, SECONDS_PER_PHOTO * 1000); }, { passive: true });
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(([entry]) => { gVisible = entry.isIntersecting; }, { threshold: 0.3 }).observe(galleryCarousel);
   }
 
-  setInterval(() => {
-    if (gPaused || gHovering || gFocused || gTouching || !gVisible || document.hidden) return;
-    gAdvance(1);
-  }, G_DELAY);
-
+  gPaint();
   gRender();
+  requestAnimationFrame(gTick);
 }
 
 // Lightbox for the "past events" photo gallery
