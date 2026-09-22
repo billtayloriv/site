@@ -97,7 +97,13 @@ if (articlesContainer) {
     return text.length > max ? `${text.slice(0, max).trim()}…` : text;
   };
   const formatDate = (dateStr) => {
-    const d = new Date(dateStr);
+    // rss2json passes the feed's pubDate through as-is, usually as "YYYY-MM-DD HH:MM:SS"
+    // rather than ISO 8601. Most engines parse that fine, but it's not spec-guaranteed, so
+    // retry with a 'T' separator (which is guaranteed) before giving up.
+    let d = new Date(dateStr);
+    if (Number.isNaN(d.getTime()) && typeof dateStr === 'string') {
+      d = new Date(dateStr.replace(' ', 'T'));
+    }
     return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
 
@@ -194,7 +200,11 @@ if (galleryCarousel) {
 
   const gTick = (now) => {
     if (gLastFrame === null) gLastFrame = now;
-    const dt = (now - gLastFrame) / 1000;
+    // Cap elapsed time per frame: rAF fully pauses in a backgrounded tab, so the first frame
+    // after it's foregrounded again would otherwise report however many seconds or minutes
+    // actually passed, jumping gPosition forward by that whole distance in one leap. Clamping
+    // it just means the carousel loses a bit of "catch-up" motion instead of visibly teleporting.
+    const dt = Math.min((now - gLastFrame) / 1000, 0.1);
     gLastFrame = now;
     const running = !gPaused && !gHovering && !gFocused && !gTouching && gVisible && !document.hidden;
     if (running) {
