@@ -75,7 +75,7 @@ if (heroRotator && !prefersReducedMotion) {
       heroRotator.textContent = lines[lineIndex];
       heroRotator.classList.remove('is-fading');
     }, 400);
-  }, 4500);
+  }, 7000);
 }
 
 // Past events photo carousel: shows several photos at once, auto-advances one at a time.

@@ -169,7 +169,10 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
 .hero .eyebrow { color: var(--teal-light); }
 .hero h1 em { font-style: normal; color: var(--teal-light); }
 .hero p.lede { color: #dfe3f7; }
-.hero-rotator { transition: opacity .4s ease; }
+.hero-rotator {
+  font-size: clamp(1.7rem, 3.8vw, 2.6rem); line-height: 1.18; min-height: 5.9em;
+  transition: opacity .4s ease;
+}
 .hero-rotator.is-fading { opacity: 0; }
 .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
 .hero--event { background: var(--teal-deep); }
@@ -243,6 +246,8 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
 .band .eyebrow { color: #d5f5f8; }
 .band p { color: #eaf9fa; max-width: 52ch; }
 .band .btn-row { margin-top: 20px; justify-content: flex-start; }
+.band-art { display: flex; justify-content: center; }
+.band-art img { width: 100%; max-width: 320px; height: auto; }
 
 /* Steps */
 .steps { list-style: none; counter-reset: step; padding: 0; margin: 0; display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
