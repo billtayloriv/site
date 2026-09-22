@@ -81,6 +81,10 @@ if (heroRotator && !prefersReducedMotion) {
 // Past events photo carousel: shows several photos at once, auto-advances one at a time.
 // 4s per step (images read faster than the quote carousel's text, so it can move quicker),
 // paused on hover/focus/touch, and a visible Pause button so it never scrolls without a way to stop it.
+// It loops by scrolling in one direction indefinitely: the real photos are cloned once and
+// appended after themselves, and once the scroll position passes the end of the real set it is
+// silently reset back by exactly one set-width, landing on the pixel-identical clone so the loop
+// never visibly rewinds or jumps back to the start.
 const galleryCarousel = document.querySelector('[data-gallery-carousel]');
 if (galleryCarousel) {
   const gTrack = galleryCarousel.querySelector('.gallery-track');
@@ -91,33 +95,58 @@ if (galleryCarousel) {
   const G_DELAY = 4000;
   const gReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  gItems.forEach((item) => {
+    const clone = item.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    clone.setAttribute('tabindex', '-1');
+    clone.removeAttribute('data-lightbox-trigger');
+    gTrack.appendChild(clone);
+  });
+
   let gPaused = gReduceMotion;
   let gHovering = false;
   let gFocused = false;
   let gTouching = false;
   let gVisible = true;
+  let gSetWidth = 0;
 
   const gStepWidth = () => {
     const gap = parseFloat(getComputedStyle(gTrack).columnGap) || 18;
     return gItems[0].getBoundingClientRect().width + gap;
   };
 
+  const gComputeSetWidth = () => { gSetWidth = gTrack.scrollWidth / 2; };
+  gComputeSetWidth();
+  window.addEventListener('resize', gComputeSetWidth);
+
   const gRender = () => {
     gToggleBtn.textContent = gPaused ? 'Play' : 'Pause';
     gToggleBtn.setAttribute('aria-label', gPaused ? 'Start automatic sliding' : 'Pause automatic sliding');
   };
 
+  // An instant scrollLeft jump fights CSS scroll-snap and gets silently reverted, so briefly
+  // turn snapping off while repositioning, then restore it once the next scroll is under way
+  const gJumpBy = (delta) => {
+    gTrack.style.scrollSnapType = 'none';
+    gTrack.scrollLeft += delta;
+    requestAnimationFrame(() => { gTrack.style.scrollSnapType = ''; });
+  };
+
   const gAdvance = (direction) => {
     const behavior = gReduceMotion ? 'auto' : 'smooth';
-    const atEnd = gTrack.scrollLeft >= gTrack.scrollWidth - gTrack.clientWidth - 4;
-    if (direction > 0 && atEnd) {
-      gTrack.scrollTo({ left: 0, behavior });
-    } else if (direction < 0 && gTrack.scrollLeft <= 4) {
-      gTrack.scrollTo({ left: gTrack.scrollWidth - gTrack.clientWidth, behavior });
-    } else {
-      gTrack.scrollBy({ left: direction * gStepWidth(), behavior });
+    if (direction < 0 && gTrack.scrollLeft - gStepWidth() < 0) {
+      gJumpBy(gSetWidth);
     }
+    gTrack.scrollBy({ left: direction * gStepWidth(), behavior });
   };
+
+  // Silently rewind by one set-width once we scroll past the real photos and onto their clones,
+  // whether that scroll came from the auto-timer, the arrows, or someone dragging the track by hand
+  gTrack.addEventListener('scroll', () => {
+    if (gSetWidth > 0 && gTrack.scrollLeft > gSetWidth + 1) {
+      gJumpBy(-gSetWidth);
+    }
+  });
 
   gPrevBtn.addEventListener('click', () => gAdvance(-1));
   gNextBtn.addEventListener('click', () => gAdvance(1));
