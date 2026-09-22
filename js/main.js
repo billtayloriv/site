@@ -108,16 +108,15 @@ if (galleryCarousel) {
   let gFocused = false;
   let gTouching = false;
   let gVisible = true;
-  let gSetWidth = 0;
 
   const gStepWidth = () => {
     const gap = parseFloat(getComputedStyle(gTrack).columnGap) || 18;
     return gItems[0].getBoundingClientRect().width + gap;
   };
 
-  const gComputeSetWidth = () => { gSetWidth = gTrack.scrollWidth / 2; };
-  gComputeSetWidth();
-  window.addEventListener('resize', gComputeSetWidth);
+  // Read fresh every time rather than caching once, so a late image load or a resize can never
+  // leave this stale and cause the loop to under- or overshoot the real/clone boundary
+  const gSetWidth = () => gTrack.scrollWidth / 2;
 
   const gRender = () => {
     gToggleBtn.textContent = gPaused ? 'Play' : 'Pause';
@@ -132,21 +131,31 @@ if (galleryCarousel) {
     requestAnimationFrame(() => { gTrack.style.scrollSnapType = ''; });
   };
 
+  // Rewind by whole set-widths, landing on the pixel-identical clone, until we're back within
+  // the real set. This runs BEFORE every forward step (not just reactively after scrolling), so
+  // even a burst of missed auto-advance ticks (e.g. a backgrounded tab catching up all at once)
+  // can never push the scroll position past the single cloned copy and expose empty track.
+  const gWrapForward = () => {
+    const setWidth = gSetWidth();
+    let guard = 0;
+    while (setWidth > 0 && gTrack.scrollLeft > setWidth + 1 && guard < 20) {
+      gJumpBy(-setWidth);
+      guard += 1;
+    }
+  };
+
   const gAdvance = (direction) => {
     const behavior = gReduceMotion ? 'auto' : 'smooth';
-    if (direction < 0 && gTrack.scrollLeft - gStepWidth() < 0) {
-      gJumpBy(gSetWidth);
+    if (direction > 0) {
+      gWrapForward();
+    } else if (direction < 0 && gTrack.scrollLeft - gStepWidth() < 0) {
+      gJumpBy(gSetWidth());
     }
     gTrack.scrollBy({ left: direction * gStepWidth(), behavior });
   };
 
-  // Silently rewind by one set-width once we scroll past the real photos and onto their clones,
-  // whether that scroll came from the auto-timer, the arrows, or someone dragging the track by hand
-  gTrack.addEventListener('scroll', () => {
-    if (gSetWidth > 0 && gTrack.scrollLeft > gSetWidth + 1) {
-      gJumpBy(-gSetWidth);
-    }
-  });
+  // Also correct reactively for manual swiping/dragging, which doesn't go through gAdvance
+  gTrack.addEventListener('scroll', gWrapForward);
 
   gPrevBtn.addEventListener('click', () => gAdvance(-1));
   gNextBtn.addEventListener('click', () => gAdvance(1));
