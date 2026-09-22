@@ -65,7 +65,7 @@ if (heroRotator && !prefersReducedMotion) {
   const lines = [
     'AI handles execution. You own the relationships.',
     'Process scales busywork. People still earn trust.',
-    'The best teams automate everything except the relationship.'
+    'Automate the work, not the relationship.'
   ];
   let lineIndex = 0;
 
