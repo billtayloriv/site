@@ -78,6 +78,59 @@ if (heroRotator && !prefersReducedMotion) {
   }, 7000);
 }
 
+// Homepage "Latest articles" section: pulls the 3 most recent Substack posts client-side via
+// rss2json's free feed-to-JSON API. The section ships with a plain "Read the newsletter on
+// Substack" link as its actual HTML, so a failed or slow fetch (or JS being off) just leaves
+// that in place rather than needing a separate error state - the section can never look broken.
+const articlesContainer = document.querySelector('[data-articles]');
+if (articlesContainer) {
+  const escapeHtml = (str) => str.replace(/[&<>"']/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+  const stripHtml = (html) => {
+    const div = document.createElement('div');
+    div.innerHTML = html || '';
+    return (div.textContent || '').replace(/\s+/g, ' ').trim();
+  };
+  const excerpt = (html, max) => {
+    const text = stripHtml(html);
+    return text.length > max ? `${text.slice(0, max).trim()}…` : text;
+  };
+  const formatDate = (dateStr) => {
+    const d = new Date(dateStr);
+    return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
+  const FEED_URL = 'https://billconnects.substack.com/feed';
+  const API_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(FEED_URL)}`;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+  fetch(API_URL, { signal: controller.signal })
+    .then((res) => (res.ok ? res.json() : Promise.reject(new Error('rss2json request failed'))))
+    .then((data) => {
+      const posts = (data.items || []).slice(0, 3);
+      if (data.status !== 'ok' || !posts.length) return; // leave the static fallback link as-is
+
+      const cards = posts.map((post) => `
+        <article class="card">
+          <span class="tag">${escapeHtml(formatDate(post.pubDate))}</span>
+          <h3><a href="${escapeHtml(post.link)}" target="_blank" rel="noopener">${escapeHtml(post.title)}</a></h3>
+          <p>${escapeHtml(excerpt(post.description || post.content || '', 140))}</p>
+        </article>
+      `).join('');
+
+      articlesContainer.innerHTML = `
+        <div class="grid grid-3">${cards}</div>
+        <div class="btn-row">
+          <a class="btn btn-ghost" href="https://billconnects.substack.com" target="_blank" rel="noopener">View all posts on Substack</a>
+        </div>
+      `;
+    })
+    .catch(() => {}) // fetch failed, timed out, or was aborted - fallback link stays put
+    .finally(() => clearTimeout(timeoutId));
+}
+
 // Past events photo carousel: shows several photos at once and glides continuously in one
 // direction. Positioned with a plain CSS transform driven by requestAnimationFrame, not native
 // scrolling - position wraps with a simple modulo every frame, so there is no scroll-snap to
