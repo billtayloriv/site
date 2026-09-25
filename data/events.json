@@ -8,8 +8,8 @@
     "city": "Swedesboro",
     "state": "NJ",
     "zip": "08085",
-    "price": 5,
-    "priceLabel": "$5 + fees",
+    "price": 7.18,
+    "priceLabel": "$7.18 + fees",
     "url": "https://worktheroom0929.eventbrite.com"
   },
   {
@@ -21,8 +21,8 @@
     "city": "Collingswood",
     "state": "NJ",
     "zip": "08108",
-    "price": 5,
-    "priceLabel": "$5 + fees",
+    "price": 7.18,
+    "priceLabel": "$7.18 + fees",
     "url": "https://worktheroom1215.eventbrite.com"
   }
 ]
