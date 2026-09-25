@@ -40,19 +40,29 @@ If the change affects what a page is about, or its main heading or intro, update
 If you change an FAQ answer on the page, change the matching FAQPage answer too, word for word.
 
 ## Step 5: Voice check
-Before opening the PR, reread every new line and confirm:
+Before showing Bill the draft, reread every new line and confirm:
 - [ ] No em dashes
 - [ ] No generic openers or corporate filler
 - [ ] Each sentence says something specific
 - [ ] It sounds like one person talking to a peer, not a company talking to a market
 
-## Step 6: Marginal improvement and changelog
-Follow the marginal improvement rule in `CLAUDE.md`. For this skill, a good improvement is tightening one other meta description or heading on the same page. Then add one line to `docs/CHANGELOG.md`.
+## Step 6: Get Bill's approval before committing
+Nothing gets committed or pushed until Bill approves the exact words. Show him in chat:
+- **Before and after** for every piece of visible text you plan to change
+- **Search text** you plan to change: title, meta description, `og:` tags and any JSON-LD text
+- **For headlines and hero lines:** your pick plus two alternates
+- **Any change to his exact wording** (em dashes, typos), with the reason
 
-## Step 7: Open the PR and report
+Then ask: "Good to go, or want changes?" and wait. If he asks for changes, revise and show the full updated version again. Commit only the version he approved, word for word.
+
+If Bill gave exact wording and you used it with no changes, that counts as approved. Skip straight to Step 7.
+
+## Step 7: Marginal improvement and changelog
+Follow the marginal improvement rule in `CLAUDE.md`. For this skill, a good improvement is tightening one other meta description or heading on the same page. If the improvement changes any wording, get Bill's approval for it the same way as Step 6 before committing. Then add one line to `docs/CHANGELOG.md`.
+
+## Step 8: Open the PR and report
 Run the `CLAUDE.md` pre-PR checklist, then open the PR. Tell Bill in plain English:
-- **Before and after** for each changed piece of text
-- **For headlines and hero lines:** two alternate versions he can swap in
+- **Before and after** for each changed piece of text, matching what he approved
 - **Search updates:** any title, description or structured data you changed to match
 - **Anything you fixed** in his exact wording (em dashes, typos)
 - **Improvement made:** the backlog item
