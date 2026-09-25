@@ -18,9 +18,13 @@ Follow `CLAUDE.md` for workflow, voice and the pre-PR checklist.
 ## Step 1: Find the published, upcoming events
 Try these in order and use the first one that returns a real event list.
 
-1. **Eventbrite API**, only if the environment variable `EVENTBRITE_TOKEN` is set:
-   `GET https://www.eventbriteapi.com/v3/organizers/121003428044/events/?status=live&order_by=start_asc&expand=venue,ticket_availability`
-   with header `Authorization: Bearer $EVENTBRITE_TOKEN`. Never print or commit the token.
+1. **Eventbrite API.** Call:
+   `curl -s "https://www.eventbriteapi.com/v3/organizers/121003428044/events/?status=live&order_by=start_asc&expand=venue,ticket_availability"`
+   - Usually the cloud environment stores the key as an API credential and attaches it for you, so send the request with no Authorization header.
+   - If that returns 401 and the environment variable `EVENTBRITE_TOKEN` is set, retry with the header `Authorization: Bearer $EVENTBRITE_TOKEN`.
+   - Never print, log or commit a token.
+   - With the API working, you already have each event's name, start, end, venue address and status. Get prices from `ticket_availability` or the event page. The `status=live` filter already excludes drafts, cancelled and ended events.
+   - If both attempts fail (401, blocked, no connection), say so in one line in the summary and go to option 2.
 2. **Organizer page.** Fetch the organizer page above. Its event list usually loads by JavaScript, so a plain fetch may show "Upcoming" with nothing under it. If so, do not assume there are no events. Go to option 3.
 3. **Ask Bill.** Say: "I can't read your Eventbrite organizer page directly. Paste the link for any event that isn't on the site yet (for example worktheroomMMDD.eventbrite.com)." Also re-check every event already in `data/events.json`.
 
