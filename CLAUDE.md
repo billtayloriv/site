@@ -22,7 +22,7 @@ Read this before every change. These rules apply to every task in this repo.
 - Never use em dashes in any visible text or copy. Use periods, commas or restructure the sentence.
 
 ## Voice and copy
-- All visible copy is written in Bill's voice. Use the `bills-voice` skill for any new or rewritten text.
+- All visible copy is written in Bill's voice. Load the `bills-voice` skill (`.claude/skills/bills-voice/SKILL.md`) for any new or rewritten text. If it can't be loaded, don't write copy; tell Bill.
 - Direct, warm, sharp. No corporate filler, no "in today's fast-paced world" openers.
 - Core thesis: AI handles execution, humans own judgment, trust and relationships.
 - Naming: "Taylored Success Management" is the consulting business. "Taylored Success" is the Substack publication. "Work The Room" is the networking event.
