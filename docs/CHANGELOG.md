@@ -2,6 +2,7 @@
 
 Newest first. One plain-English line per PR: what changed, plus the backlog improvement made.
 
+- 2026-09-25 Added 4 photos from the September Collingswood Work The Room to the gallery, newest first (gallery now 12). Improvement: compressed the 8 older gallery photos to under 80 KB each.
 - 2026-09-25 Events synced: removed Sept 22 Collingswood (date passed), kept Sept 29 Swedesboro, added Dec 15 Collingswood, created `data/events.json`. Improvement: `lastmod` dates in `sitemap.xml`.
 - 2026-09-24 Added house rules (`CLAUDE.md`), improvement backlog and this changelog.
 - 2026-09-21 New hero tagline "Automate the work, not the relationship." and bubbles art on Work The Room.

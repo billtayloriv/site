@@ -331,7 +331,7 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
   flex: 0 0 calc(25% - 13.5px);
   padding: 0; margin: 0; border: 0; background: none; cursor: zoom-in; border-radius: var(--radius); overflow: hidden; line-height: 0;
 }
-.gallery-item img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .35s ease; }
+.gallery-item img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .35s ease; }
 .gallery-item:hover img, .gallery-item:focus-visible img { transform: scale(1.07); }
 .gallery-controls { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 22px; }
 
