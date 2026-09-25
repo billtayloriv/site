@@ -2,6 +2,7 @@
 
 Newest first. One plain-English line per PR: what changed, plus the backlog improvement made.
 
+- 2026-09-25 Added a "Connect on LinkedIn" button to the Meet the founder section on the About page. Improvement: ContactPage structured data on `contact.html`.
 - 2026-09-25 Events synced: removed Sept 22 Collingswood (date passed), kept Sept 29 Swedesboro, added Dec 15 Collingswood, created `data/events.json`. Improvement: `lastmod` dates in `sitemap.xml`.
 - 2026-09-24 Added house rules (`CLAUDE.md`), improvement backlog and this changelog.
 - 2026-09-21 New hero tagline "Automate the work, not the relationship." and bubbles art on Work The Room.
