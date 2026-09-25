@@ -21,6 +21,7 @@ Each PR fixes the top unchecked item that fits safely (see CLAUDE.md). Check ite
 ## Done
 - [x] 2026-09-25 Fixed the `width` and `height` on gallery photos 1 to 8 in `work-the-room.html`. They said 480x360, but the files are portrait 480x640.
 - [x] 2026-09-25 Eventbrite API is now connected and working for event syncs (previously needed a token or manual links).
+- [x] 2026-09-25 Added `width` and `height` to the headshot on `about.html` so the page does not shift while it loads.
 - [x] 2026-09-25 Added ContactPage and Organization structured data to `contact.html` (email, LinkedIn, Greater Philadelphia Region).
 - [x] 2026-09-25 Compressed the 8 original gallery photos to under 80 KB each (were 146 to 217 KB) and stripped their hidden metadata.
 - [x] 2026-09-25 Added `lastmod` dates to every `sitemap.xml` entry.
