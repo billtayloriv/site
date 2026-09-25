@@ -22,7 +22,7 @@ Each PR fixes the top unchecked item that fits safely (see CLAUDE.md). Check ite
 
 ## Done
 - [x] 2026-09-25 Added `lastmod` dates to every `sitemap.xml` entry.
-- [x] 2026-09-25 Removed the past Sept 22 event and created `data/events.json` as the single event record.
+- [x] 2026-09-25 Removed the past Sept 22 event, added Dec 15, and created `data/events.json` as the single event record.
 - [x] 2026-09-21 Favicon, `og:image`, robots.txt, sitemap.xml, canonical tags, JSON-LD, custom 404.
 - [x] 2026-09-21 Google Search Console verified, homepage indexing requested, sitemap submitted.
 - [x] 2026-09-21 Substack feed on homepage, Fraunces headline font, logo hover no longer slants.
