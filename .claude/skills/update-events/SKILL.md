@@ -19,11 +19,13 @@ Follow `CLAUDE.md` for workflow, voice and the pre-PR checklist.
 Try these in order and use the first one that returns a real event list.
 
 1. **Eventbrite API.** Call:
-   `curl -s "https://www.eventbriteapi.com/v3/organizers/121003428044/events/?status=live&order_by=start_asc&expand=venue,ticket_availability"`
+   `curl -s "https://www.eventbriteapi.com/v3/organizers/121003428044/events/?status=live&order_by=start_asc&expand=venue,ticket_availability,ticket_classes"`
    - Usually the cloud environment stores the key as an API credential and attaches it for you, so send the request with no Authorization header.
    - If that returns 401 and the environment variable `EVENTBRITE_TOKEN` is set, retry with the header `Authorization: Bearer $EVENTBRITE_TOKEN`.
    - Never print, log or commit a token.
-   - With the API working, you already have each event's name, start, end, venue address and status. Get prices from `ticket_availability` or the event page. The `status=live` filter already excludes drafts, cancelled and ended events.
+   - With the API working, you already have each event's name, start, end, venue address and status. The `status=live` filter already excludes drafts, cancelled and ended events.
+   - **Price:** use the `cost` value on the relevant entry in `ticket_classes`, never `ticket_availability.minimum_ticket_price` or `maximum_ticket_price`. Those `ticket_availability` prices include Eventbrite's fees, so using them double counts the "+ fees" already in the site's price label. If there are multiple ticket classes, use the standard/general admission one, not add ons or sponsor tiers.
+   - **If Eventbrite's price differs from what is already on the site,** do not change the site's price. Keep the existing `price`/`priceLabel` in `data/events.json` and the page as they are, and flag the difference in the PR summary (both numbers, and the event it's for) so Bill can decide. Only change the price when Bill asks for that specifically.
    - If both attempts fail (401, blocked, no connection), say so in one line in the summary and go to option 2.
 2. **Organizer page.** Fetch the organizer page above. Its event list usually loads by JavaScript, so a plain fetch may show "Upcoming" with nothing under it. If so, do not assume there are no events. Go to option 3.
 3. **Ask Bill.** Say: "I can't read your Eventbrite organizer page directly. Paste the link for any event that isn't on the site yet (for example worktheroomMMDD.eventbrite.com)." Also re-check every event already in `data/events.json`.
@@ -92,6 +94,7 @@ Run the `CLAUDE.md` pre-PR checklist, then open the PR. In the summary, tell Bil
 - **Added:** each new event with its date
 - **Removed:** each event taken off and why (date passed, cancelled, unpublished)
 - **Kept:** events still showing
+- **Price differences:** any event where Eventbrite's ticket price does not match the site's price. Say both numbers and that you left the site unchanged.
 - **Missing info:** any detail you could not find
 - **Improvement made:** the backlog item
 - **Reminder:** removing an event from the website does not cancel it on Eventbrite. Refunds and attendee notices happen there.

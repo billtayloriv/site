@@ -2,7 +2,7 @@
 
 Newest first. One plain-English line per PR: what changed, plus the backlog improvement made.
 
-- 2026-09-25 Weekly upkeep: synced ticket price to $7.18 + fees for the Sept 29 Swedesboro and Dec 15 Collingswood events (both still upcoming, no cards added or removed). Improvement: fixed gallery photos 1 to 8 showing the wrong height (480x360 instead of the actual 480x640).
+- 2026-09-25 Weekly upkeep: kept the Sept 29 Swedesboro and Dec 15 Collingswood events as is, both still upcoming and priced at $5 + fees. Fixed the `update-events` skill so it reads the base ticket price instead of a price that already includes Eventbrite's fees, and now flags price differences for Bill instead of changing the site automatically. Improvement: fixed gallery photos 1 to 8 showing the wrong height (480x360 instead of the actual 480x640).
 - 2026-09-25 Added a "Connect on LinkedIn" button to the Meet the founder section on the About page. Improvement: added width and height to the About page headshot so the page does not shift while it loads.
 - 2026-09-25 About page intro rewritten warmer, with Work The Room in the first sentence. Search and share descriptions updated to match. Improvement: structured data on the Contact page.
 - 2026-09-25 Added 4 photos from the September Collingswood Work The Room to the gallery, newest first (gallery now 12). Improvement: compressed the 8 older gallery photos to under 80 KB each.
