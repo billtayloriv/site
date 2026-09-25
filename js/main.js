@@ -313,6 +313,13 @@ document.querySelectorAll('[data-carousel]').forEach((root) => {
   const DELAY = 6500; // milliseconds each quote stays on screen
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // With only one quote, hide the arrows, dots and Pause button since they would do nothing
+  if (slides.length < 2) {
+    const controls = root.querySelector('.carousel-controls');
+    if (controls) controls.hidden = true;
+    return;
+  }
+
   let index = 0;
   let userPaused = reduceMotion; // people who prefer less motion start paused
   let hovering = false;
