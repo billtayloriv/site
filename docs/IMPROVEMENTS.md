@@ -4,7 +4,6 @@ Each PR fixes the top unchecked item that fits safely (see CLAUDE.md). Check ite
 
 ## Quick wins (one per PR)
 - [ ] Add the "Upcoming Events" section's past-event handling: if no upcoming events exist, show a friendly "Next date coming soon" message with a link to the Work The Room LinkedIn page instead of an empty section.
-- [ ] Add a basic Organization or ContactPage JSON-LD block to `contact.html`.
 - [ ] Review every meta description for length (roughly 140 to 160 characters) and make sure each one names what the page is about.
 - [ ] Check that every gallery photo's alt text describes the specific photo, not a generic phrase.
 - [ ] Fix the `width` and `height` on gallery photos 1 to 8 in `work-the-room.html`. They say 480x360, but the files are portrait 480x640.
@@ -22,6 +21,7 @@ Each PR fixes the top unchecked item that fits safely (see CLAUDE.md). Check ite
 - [ ] Verify the site in Bing Webmaster Tools and submit `sitemap.xml`.
 
 ## Done
+- [x] 2026-09-25 Added ContactPage and Organization structured data to `contact.html` (email, LinkedIn, Greater Philadelphia Region).
 - [x] 2026-09-25 Compressed the 8 original gallery photos to under 80 KB each (were 146 to 217 KB) and stripped their hidden metadata.
 - [x] 2026-09-25 Added `lastmod` dates to every `sitemap.xml` entry.
 - [x] 2026-09-25 Removed the past Sept 22 event, added Dec 15, and created `data/events.json` as the single event record.
