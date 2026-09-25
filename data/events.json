@@ -1,0 +1,28 @@
+[
+  {
+    "title": "Work The Room: Professional Networking – Swedesboro, NJ",
+    "start": "2026-09-29T18:30:00-04:00",
+    "end": "2026-09-29T20:30:00-04:00",
+    "venue": "Swedesboro Brewing Company",
+    "street": "95 Woodstown Road",
+    "city": "Swedesboro",
+    "state": "NJ",
+    "zip": "08085",
+    "price": 5,
+    "priceLabel": "$5 + fees",
+    "url": "https://worktheroom0929.eventbrite.com"
+  },
+  {
+    "title": "Work The Room: Professional Networking – Collingswood, NJ",
+    "start": "2026-12-15T18:00:00-05:00",
+    "end": "2026-12-15T20:00:00-05:00",
+    "venue": "Raccoon Taproom (Swedesboro Brewing Company)",
+    "street": "1 Powell Lane",
+    "city": "Collingswood",
+    "state": "NJ",
+    "zip": "08108",
+    "price": 5,
+    "priceLabel": "$5 + fees",
+    "url": "https://worktheroom1215.eventbrite.com"
+  }
+]
