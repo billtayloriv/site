@@ -4,7 +4,6 @@ Each PR fixes the top unchecked item that fits safely (see CLAUDE.md). Check ite
 
 ## Quick wins (one per PR)
 - [ ] Add the "Upcoming Events" section's past-event handling: if no upcoming events exist, show a friendly "Next date coming soon" message with a link to the Work The Room LinkedIn page instead of an empty section.
-- [ ] Review every meta description for length (roughly 140 to 160 characters) and make sure each one names what the page is about.
 - [ ] Check that every gallery photo's alt text describes the specific photo, not a generic phrase.
 
 ## Bigger items (Bill decides when)
@@ -18,6 +17,7 @@ Each PR fixes the top unchecked item that fits safely (see CLAUDE.md). Check ite
 - [ ] Verify the site in Bing Webmaster Tools and submit `sitemap.xml`.
 
 ## Done
+- [x] 2026-10-04 Reviewed every meta description. Trimmed `work-the-room.html` from 171 to 160 characters. The rest are in range or noindex pages (404, thanks); `what-we-do.html` sits at 164, close enough to leave.
 - [x] 2026-09-25 Updated the HTML comment above the gallery in `work-the-room.html` so it says new photos go first, not below the last one.
 - [x] 2026-09-25 Fixed the `width` and `height` on gallery photos 1 to 8 in `work-the-room.html`. They said 480x360, but the files are portrait 480x640.
 - [x] 2026-09-25 Eventbrite API is now connected and working for event syncs (previously needed a token or manual links).
