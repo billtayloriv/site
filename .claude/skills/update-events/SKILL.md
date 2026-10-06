@@ -64,10 +64,17 @@ Use the event's short vanity link (worktheroomMMDD.eventbrite.com) when one exis
 ## Step 3: Rebuild the page from the data file
 In `work-the-room.html`:
 
-**Visible cards.** Replace everything inside the Upcoming Events grid with one card per event, in date order, using exactly this markup:
+**Visible cards.** The grid is `<div class="grid events-grid">`. Replace everything inside it with one card per event, in date order, using exactly this markup:
 ```html
 <article class="card event-card">
-  <h3>{title}</h3>
+  <span class="tag">Next up</span>
+  <div class="event-head">
+    <div class="event-date" aria-hidden="true"><span>{Mon}</span><strong>{D}</strong></div>
+    <div>
+      <p class="event-series">Work The Room</p>
+      <h3>{city}, {state}</h3>
+    </div>
+  </div>
   <dl class="event-meta">
     <div><dt>When</dt><dd>{Weekday, Month D, YYYY, h:mm–h:mm PM}</dd></div>
     <div><dt>Where</dt><dd>{venue}, {street}, {city}, {state} {zip}</dd></div>
@@ -78,7 +85,10 @@ In `work-the-room.html`:
   </div>
 </article>
 ```
-If there is only one event, make sure the single card does not stretch awkwardly across the grid.
+- `{Mon}` is the three-letter month (Nov), `{D}` the day with no leading zero (7, 19).
+- `{city}, {state}` is the part of the title after the dash.
+- The `Next up` tag goes on the first (soonest) card only, and only when there are two or more events.
+- The CSS handles the layout for any count: 3 across on desktop, 2 across for exactly two events, 1 per row on tablets and phones, and a single card never stretches across the grid. Do not add layout styles per card.
 
 **No events.** If the list is empty, replace the cards with one short message in Bill's voice saying the next date is coming soon, plus a link to https://www.linkedin.com/company/work-the-room-professional-networking. Never leave the section blank.
 

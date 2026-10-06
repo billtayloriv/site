@@ -218,7 +218,13 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
 .grid { display: grid; gap: 24px; }
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+/* Upcoming events: 3 across on desktop, 1 per row below that (no lonely orphan card) */
+.events-grid { grid-template-columns: repeat(3, 1fr); }
+.events-grid:has(> :nth-child(2):last-child) { grid-template-columns: repeat(2, 1fr); }
+.event-card { display: flex; flex-direction: column; position: relative; }
 .event-card:only-child { max-width: 560px; }
+.card.event-card .tag { position: absolute; top: -13px; right: 20px; margin: 0; background: var(--teal); color: #fff; }
+.event-card .btn-row { margin-top: auto; padding-top: 28px; }
 .grid-4 { grid-template-columns: repeat(4, 1fr); }
 .card {
   background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
@@ -279,7 +285,16 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
 .details dd { margin: 0; font-weight: 500; }
 
 /* Event cards */
-.event-meta { display: grid; gap: 14px; margin: 18px 0 0; }
+.event-head { display: flex; align-items: center; gap: 16px; }
+.event-head h3 { margin: 0; }
+.event-date {
+  flex: 0 0 auto; width: 64px; padding: 8px 0; text-align: center; line-height: 1;
+  border-radius: 12px; background: var(--indigo); color: #fff;
+}
+.event-date span { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--teal-light); }
+.event-date strong { display: block; font-size: 1.7rem; font-weight: 800; margin-top: 4px; }
+.event-series { margin: 0 0 4px; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.event-meta { display: grid; gap: 14px; margin: 22px 0 0; }
 .event-meta dt { font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--teal-deep); margin-bottom: 4px; }
 .event-meta dd { margin: 0; font-weight: 500; }
 
@@ -405,6 +420,7 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
   .hero-grid, .band-inner, .profile, .contact-grid, .why-grid { grid-template-columns: 1fr; }
   .why-grid-art { justify-self: center; width: 200px; }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .events-grid, .events-grid:has(> :nth-child(2):last-child) { grid-template-columns: 1fr; }
   .hero { padding: 64px 0 72px; }
   .section { padding: 60px 0; }
   .profile .profile-photo { max-width: 260px; }

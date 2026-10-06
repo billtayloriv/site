@@ -2,6 +2,7 @@
 
 Newest first. One plain-English line per PR: what changed, plus the backlog improvement made.
 
+- 2026-10-06 Events synced: added Nov 19 Haddon Heights (Tanner Brewing Company), kept Nov 17 Swedesboro and Dec 15 Collingswood. Redesigned the event cards for three events: date badge, city as the heading, a "Next up" tag on the soonest event, buttons lined up, and one card per row on tablets so there is no lone orphan card. The update-events skill now uses the new card markup. Improvement: specific alt text for gallery photos 1 to 8.
 - 2026-10-04 Events synced: added Nov 17 Swedesboro, removed Sept 29 Swedesboro (date passed), kept Dec 15 Collingswood. Improvement: reviewed all meta descriptions and trimmed the Work The Room one to 160 characters.
 - 2026-09-25 Added Brian Dappolone's Work The Room quote (Rubicon Game Supplies & Playmat Studio) as the first slide in "What attendees say". The quote carousel now hides its arrows, dots and Pause button whenever it has only one quote. Improvement: the gallery's editing note now says new photos go first.
 - 2026-09-25 Weekly upkeep: kept the Sept 29 Swedesboro and Dec 15 Collingswood events as is, both still upcoming and priced at $5 + fees. Fixed the `update-events` skill so it reads the base ticket price instead of a price that already includes Eventbrite's fees, and now flags price differences for Bill instead of changing the site automatically. Improvement: fixed gallery photos 1 to 8 showing the wrong height (480x360 instead of the actual 480x640).
