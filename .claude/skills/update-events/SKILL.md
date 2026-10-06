@@ -90,7 +90,18 @@ In `work-the-room.html`:
 - The `Next up` tag goes on the first (soonest) card only, and only when there are two or more events.
 - The CSS handles the layout for any count: 3 across on desktop, 2 across for exactly two events, 1 per row on tablets and phones, and a single card never stretches across the grid. Do not add layout styles per card.
 
-**No events.** If the list is empty, replace the cards with one short message in Bill's voice saying the next date is coming soon, plus a link to https://www.linkedin.com/company/work-the-room-professional-networking. Never leave the section blank.
+**No events.** If the list is empty, replace the cards with exactly this card (approved copy, in Bill's voice). Never leave the section blank.
+```html
+<article class="card event-card">
+  <p class="event-series">Work The Room</p>
+  <h3>Next date coming soon</h3>
+  <p>Nothing on the calendar this second, but the room is never empty for long. Follow Work The Room on LinkedIn and you'll hear about the next one first.</p>
+  <div class="btn-row">
+    <a class="btn" href="https://www.linkedin.com/company/work-the-room-professional-networking" target="_blank" rel="noopener">Follow on LinkedIn</a>
+  </div>
+</article>
+```
+With no events, there are no Event JSON-LD blocks at all.
 
 **Structured data.** In `<head>`, delete every existing `"@type": "Event"` JSON-LD block and add one per event using the same structure already on the page (Place, PostalAddress, Offer with price and URL, organizer Work The Room). Do not touch the FAQPage block. Make sure every block is valid JSON.
 

@@ -3,7 +3,7 @@
 Each PR fixes the top unchecked item that fits safely (see CLAUDE.md). Check items off with the date. Add new findings at the bottom of the right section.
 
 ## Quick wins (one per PR)
-- [ ] Add the "Upcoming Events" section's past-event handling: if no upcoming events exist, show a friendly "Next date coming soon" message with a link to the Work The Room LinkedIn page instead of an empty section.
+- [ ] On mid-size laptop screens (about 1024 px wide) longer city names wrap to two lines, so the "When" rows on the event cards sit at slightly different heights.
 
 ## Bigger items (Bill decides when)
 - [ ] Build the event cards and Event JSON-LD automatically from `data/events.json` (the file now exists; the page is still updated by hand from it).
@@ -16,6 +16,7 @@ Each PR fixes the top unchecked item that fits safely (see CLAUDE.md). Check ite
 - [ ] Verify the site in Bing Webmaster Tools and submit `sitemap.xml`.
 
 ## Done
+- [x] 2026-10-06 Added a ready-made "Next date coming soon" card with a LinkedIn follow button to the update-events skill, so the Upcoming Events section never goes blank when no dates are booked.
 - [x] 2026-10-06 Rewrote the alt text on gallery photos 1 to 8 so each one describes that specific photo (they all said some version of "attendees at a past event").
 - [x] 2026-10-04 Reviewed every meta description. Trimmed `work-the-room.html` from 171 to 160 characters. The rest are in range or noindex pages (404, thanks); `what-we-do.html` sits at 164, close enough to leave.
 - [x] 2026-09-25 Updated the HTML comment above the gallery in `work-the-room.html` so it says new photos go first, not below the last one.
