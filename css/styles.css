@@ -420,16 +420,8 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
   .hero-grid, .band-inner, .profile, .contact-grid, .why-grid { grid-template-columns: 1fr; }
   .why-grid-art { justify-self: center; width: 200px; }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
-  /* Upcoming events become a swipe row: next card peeks in from the right */
-  .events-grid, .events-grid:has(> :nth-child(2):last-child) {
-    display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
-    padding: 16px 20px 12px; margin-inline: -20px; scroll-padding-inline: 20px;
-    -webkit-overflow-scrolling: touch; scrollbar-width: none;
-  }
-  .events-grid::-webkit-scrollbar { display: none; }
-  .event-card { flex: 0 0 min(82%, 420px); scroll-snap-align: start; }
-  .event-card:only-child { flex-basis: 100%; }
-  .events-grid .card:hover { transform: none; }
+  /* Upcoming events stack one per row, soonest first */
+  .events-grid, .events-grid:has(> :nth-child(2):last-child) { grid-template-columns: 1fr; }
   .hero { padding: 64px 0 72px; }
   .section { padding: 60px 0; }
   .profile .profile-photo { max-width: 260px; }
