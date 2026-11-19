@@ -225,6 +225,12 @@ main a:not(.btn):hover::after, main a:not(.btn):focus-visible::after { transform
 .event-card:only-child { max-width: 560px; }
 .card.event-card .tag { position: absolute; top: -13px; right: 20px; margin: 0; background: var(--teal); color: #fff; }
 .event-card .btn-row { margin-top: auto; padding-top: 28px; }
+/* Line up heading, details and button rows across cards, even when a city name wraps */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 901px) {
+    .event-card:has(> .event-head) { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; }
+  }
+}
 .grid-4 { grid-template-columns: repeat(4, 1fr); }
 .card {
   background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);

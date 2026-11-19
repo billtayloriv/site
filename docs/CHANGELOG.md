@@ -2,6 +2,7 @@
 
 Newest first. One plain-English line per PR: what changed, plus the backlog improvement made.
 
+- 2026-11-19 Events synced: removed Nov 17 Swedesboro (date passed), kept Nov 19 Haddon Heights and Dec 15 Collingswood. "Next up" now on Nov 19. Improvement: event card rows line up on computers even when a city name wraps.
 - 2026-10-06 Fixed browsers showing an old saved copy of the site design after an update: every page now loads the stylesheet and script with a version tag. Confirmed event cards stay three across on computers and stack in date order on tablets and phones. Improvement: ready-made "Next date coming soon" card for when no events are booked.
 - 2026-10-06 Events synced: added Nov 19 Haddon Heights (Tanner Brewing Company), kept Nov 17 Swedesboro and Dec 15 Collingswood. Redesigned the event cards for three events: date badge, city as the heading, a "Next up" tag on the soonest event, buttons lined up, and one card per row on tablets so there is no lone orphan card. The update-events skill now uses the new card markup. Improvement: specific alt text for gallery photos 1 to 8.
 - 2026-10-04 Events synced: added Nov 17 Swedesboro, removed Sept 29 Swedesboro (date passed), kept Dec 15 Collingswood. Improvement: reviewed all meta descriptions and trimmed the Work The Room one to 160 characters.
